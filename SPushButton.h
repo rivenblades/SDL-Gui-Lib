@@ -7,4 +7,5 @@ public:
     :x(_x),y(_y),width(_width),height(_height){};
     int x,y,width,height;
     SRect boundingRect();
+    SPainterPath shape();//outline of the object
 };
