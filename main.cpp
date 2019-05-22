@@ -1,5 +1,6 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <iostream>
 
 #define IMG_PATH "flstudio_logo.jpeg"
 
@@ -61,6 +62,17 @@ int main (int argc, char** argv)
 				break;
 			else if (e.type == SDL_KEYUP && e.key.keysym.sym == SDLK_ESCAPE)
 				break;
+            else if (e.type == SDL_MOUSEBUTTONDOWN){
+               //If the left mouse button was pressed
+                if( e.button.button == SDL_BUTTON_LEFT )
+                {
+                    //Get the mouse offsets
+                    int x = e.button.x;
+                    int y = e.button.y;
+                
+                    std::cout<<"("<<x<<" ,"<<y<< ")"<<std::flush;
+                }
+            }
 		} 
 		
 		// clear the screen
