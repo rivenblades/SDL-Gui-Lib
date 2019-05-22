@@ -1,3 +1,10 @@
 make:main.cpp
 	g++ -Wall -g main.cpp -o main -lSDL2 -lSDL2_image
 
+
+MSG ?= $(shell bash -c 'read -s -p "Message: " msg; echo $$msg')
+push:
+	git add *
+	git commit -m $MSG
+	git push -u origin master
+
