@@ -5,6 +5,6 @@ make:main.cpp
 MSG ?= $(shell bash -c 'read -s -p "Message: " msg; echo $$msg')
 push:
 	git add *
-	git commit -m $MSG
+	git commit -m $(MSG)
 	git push -u origin master
 
