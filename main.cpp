@@ -1,7 +1,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <iostream>
-
+#include "SPainter.h"
 #define IMG_PATH "flstudio_logo.jpeg"
 
 const int width = 1280;
@@ -12,7 +12,7 @@ int main (int argc, char** argv)
     SDL_Window* window = NULL;
     window = SDL_CreateWindow
     (
-        "Jeu de la vie", SDL_WINDOWPOS_UNDEFINED,
+        "SDL GUI Test", SDL_WINDOWPOS_UNDEFINED,
         SDL_WINDOWPOS_UNDEFINED,
         width,
         height,
@@ -22,7 +22,7 @@ int main (int argc, char** argv)
     // Setup renderer
     SDL_Renderer* renderer = NULL;
     renderer =  SDL_CreateRenderer( window, -1, SDL_RENDERER_ACCELERATED);
-
+    SPainter painter(window,renderer);
     // Set render color to red ( background will be rendered in this color )
     SDL_SetRenderDrawColor( renderer, 255, 0, 0, 255 );
 
@@ -36,14 +36,7 @@ int main (int argc, char** argv)
     r.w = 50;
     r.h = 50;
 
-    // Set render color to blue ( rect will be rendered in this color )
-    SDL_SetRenderDrawColor( renderer, 0, 0, 255, 255 );
-
-    // Render rect
-    SDL_RenderFillRect( renderer, &r );
-
-    // Render the rect to the screen
-    SDL_RenderPresent(renderer);
+   
 
     int w, h; // texture width & height
     // load our image
@@ -52,6 +45,48 @@ int main (int argc, char** argv)
 	// put the location where we want the texture to be drawn into a rectangle
 	// I'm also scaling the texture 2x simply by setting the width and height
 	SDL_Rect texr; texr.x = width/2; texr.y = height/2; texr.w = w; texr.h = h; 
+
+    // Set linear blending (haven't tried this with bilinear...)
+SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY,"2");
+
+// Create a 4x4 texture to serve as the source for our gradient.
+uint32_t * bgpixels;
+SDL_Texture * background = SDL_CreateTexture(renderer,SDL_PIXELFORMAT_RGBA8888,
+    SDL_TEXTUREACCESS_STREAMING,4,4);
+
+// Set up the gradient colors.
+// Each 2x2 quadrant of the texture has a separate color:
+
+// AABB
+// AABB
+// CCDD
+// CCDD
+int i;
+SDL_LockTexture(background,NULL,(void**)(&bgpixels),&i);
+bgpixels[0] = 0x0000ffff;
+bgpixels[1] = 0x0000ffff;
+bgpixels[2] = 0x00ff00ff;
+bgpixels[3] = 0x00ff00ff;
+bgpixels[4] = 0x0000ffff;
+bgpixels[5] = 0x0000ffff;
+bgpixels[6] = 0x00ff00ff;
+bgpixels[7] = 0x00ff00ff;
+bgpixels[8] = 0xff0000ff;
+bgpixels[9] = 0xff0000ff;
+bgpixels[10] = 0xffffffff;
+bgpixels[11] = 0xffffffff;
+bgpixels[12] = 0xff0000ff;
+bgpixels[13] = 0xff0000ff;
+bgpixels[14] = 0xffffffff;
+bgpixels[15] = 0xffffffff;
+SDL_UnlockTexture(background);
+
+SDL_Rect r1;
+r1.x=1;
+r1.y=1;
+r1.w=2;
+r1.h=2;
+// Blit it into place with the renderer.
    // main loop
 	while (1) {
 		
@@ -77,6 +112,18 @@ int main (int argc, char** argv)
 		
 		// clear the screen
 		SDL_RenderClear(renderer);
+
+        SDL_RenderCopy(renderer,background,&r1,NULL);
+
+        // Set render color to blue ( rect will be rendered in this color )
+        SDL_SetRenderDrawColor( renderer, 0, 255, 255, 255 );
+
+        // Render rect
+        SDL_RenderFillRect( renderer, &r );
+
+        // Render the rect to the screen
+        // SDL_RenderPresent(renderer);
+
 		// copy the texture to the rendering context
 		SDL_RenderCopy(renderer, img, NULL, &texr);
 		// flip the backbuffer

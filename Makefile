@@ -1,5 +1,7 @@
+SOURCE_FILES:= main.cpp\
+		SPainter.cpp
 make:main.cpp
-	g++ -Wall -g main.cpp -o main -lSDL2 -lSDL2_image
+	g++ -Wall -g $(SOURCE_FILES) -o main -lSDL2 -lSDL2_image
 
 
 MSG ?= $(shell bash -c 'read -s -p "Message: " msg; echo $$msg')
