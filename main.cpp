@@ -3,6 +3,13 @@
 #include <iostream>
 #include "SPainter.h"
 #include "SPushButton.h"
+#include "extern/tinyxml2/tinyxml2.h"
+using namespace tinyxml2;
+
+#ifndef XMLCheckResult
+	#define XMLCheckResult(a_eResult) if (a_eResult != XML_SUCCESS) { std::cout<<"Error: "<< a_eResult<<std::endl; return a_eResult; }
+#endif
+
 #define IMG_PATH "flstudio_logo.jpeg"
 
 const int width = 1280;
@@ -43,9 +50,25 @@ int main (int argc, char** argv)
     r.w = 50;
     r.h = 50;
 
-   SPushButton button(500,500,100,100);
+    SPushButton button(500,500,100,100);
     button.setOnMouseClick(&PrintSomething);
     
+    XMLDocument xmlDoc;
+    // XMLNode *pRoot = xmlDoc.NewElement("SPushButton");
+    // xmlDoc.InsertFirstChild(pRoot);
+    // XMLNode *xEl = xmlDoc.NewElement("x");
+    // XMLNode *yEl = xmlDoc.NewElement("y");
+    // XMLNode *widthEl = xmlDoc.NewElement("width");
+    // XMLNode *heightEl = xmlDoc.NewElement("height");
+    XMLElement *SPushB = xmlDoc.NewElement("SPushButton");
+    SPushB->SetAttribute("x",button.x);
+    SPushB->SetAttribute("y",button.y);
+    SPushB->SetAttribute("width",button.width);
+    SPushB->SetAttribute("height",button.height);
+    xmlDoc.InsertFirstChild(SPushB);
+    XMLError result = xmlDoc.SaveFile("test_app.ui");
+    XMLCheckResult(result);
+
     int w, h; // texture width & height
     // load our image
 	SDL_Texture *img = IMG_LoadTexture(renderer, IMG_PATH);
@@ -55,46 +78,46 @@ int main (int argc, char** argv)
 	SDL_Rect texr; texr.x = width/2; texr.y = height/2; texr.w = w; texr.h = h; 
 
     // Set linear blending (haven't tried this with bilinear...)
-SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY,"2");
+    SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY,"2");
 
-// Create a 4x4 texture to serve as the source for our gradient.
-uint32_t * bgpixels;
-SDL_Texture * background = SDL_CreateTexture(renderer,SDL_PIXELFORMAT_RGBA8888,
-    SDL_TEXTUREACCESS_STREAMING,4,4);
+    // Create a 4x4 texture to serve as the source for our gradient.
+    uint32_t * bgpixels;
+    SDL_Texture * background = SDL_CreateTexture(renderer,SDL_PIXELFORMAT_RGBA8888,
+        SDL_TEXTUREACCESS_STREAMING,4,4);
 
-// Set up the gradient colors.
-// Each 2x2 quadrant of the texture has a separate color:
+    // Set up the gradient colors.
+    // Each 2x2 quadrant of the texture has a separate color:
 
-// AABB
-// AABB
-// CCDD
-// CCDD
-int i;
-SDL_LockTexture(background,NULL,(void**)(&bgpixels),&i);
-bgpixels[0] = 0x0000ffff;
-bgpixels[1] = 0x0000ffff;
-bgpixels[2] = 0x00ff00ff;
-bgpixels[3] = 0x00ff00ff;
-bgpixels[4] = 0x0000ffff;
-bgpixels[5] = 0x0000ffff;
-bgpixels[6] = 0x00ff00ff;
-bgpixels[7] = 0x00ff00ff;
-bgpixels[8] = 0xff0000ff;
-bgpixels[9] = 0xff0000ff;
-bgpixels[10] = 0xffffffff;
-bgpixels[11] = 0xffffffff;
-bgpixels[12] = 0xff0000ff;
-bgpixels[13] = 0xff0000ff;
-bgpixels[14] = 0xffffffff;
-bgpixels[15] = 0xffffffff;
-SDL_UnlockTexture(background);
+    // AABB
+    // AABB
+    // CCDD
+    // CCDD
+    int i;
+    SDL_LockTexture(background,NULL,(void**)(&bgpixels),&i);
+    bgpixels[0] = 0x0000ffff;
+    bgpixels[1] = 0x0000ffff;
+    bgpixels[2] = 0x00ff00ff;
+    bgpixels[3] = 0x00ff00ff;
+    bgpixels[4] = 0x0000ffff;
+    bgpixels[5] = 0x0000ffff;
+    bgpixels[6] = 0x00ff00ff;
+    bgpixels[7] = 0x00ff00ff;
+    bgpixels[8] = 0xff0000ff;
+    bgpixels[9] = 0xff0000ff;
+    bgpixels[10] = 0xffffffff;
+    bgpixels[11] = 0xffffffff;
+    bgpixels[12] = 0xff0000ff;
+    bgpixels[13] = 0xff0000ff;
+    bgpixels[14] = 0xffffffff;
+    bgpixels[15] = 0xffffffff;
+    SDL_UnlockTexture(background);
 
-SDL_Rect r1;
-r1.x=1;
-r1.y=1;
-r1.w=2;
-r1.h=2;
-// Blit it into place with the renderer.
+    SDL_Rect r1;
+    r1.x=1;
+    r1.y=1;
+    r1.w=2;
+    r1.h=2;
+    // Blit it into place with the renderer.
    // main loop
 	while (1) {
 		

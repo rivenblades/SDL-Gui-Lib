@@ -1,9 +1,12 @@
 SOURCE_FILES:= main.cpp\
 		SPainter.cpp\
-		SPushButton.cpp
+		SPushButton.cpp\
+		extern/tinyxml2/tinyxml2.cpp
 make:main.cpp
-	g++ -Wall -g $(SOURCE_FILES) -o main -lSDL2 -lSDL2_image
+	g++ -Wall -g -I/extern/tinyxml2/ $(SOURCE_FILES) -o main -lSDL2 -lSDL2_image 
 
+clean:
+	rm *.gch
 
 MSG ?= $(shell bash -c 'read -s -p "Message: " msg; echo $$msg')
 push:
