@@ -2,5 +2,5 @@
 
 Replacement of QT framework
 
-![alt text]('demo.png')
+![](demo.png)
 
