@@ -2,6 +2,7 @@
 #include <SDL2/SDL_image.h>
 #include <iostream>
 #include "SPainter.h"
+#include "SPushButton.h"
 #define IMG_PATH "flstudio_logo.jpeg"
 
 const int width = 1280;
@@ -26,6 +27,8 @@ int main (int argc, char** argv)
     // Set render color to red ( background will be rendered in this color )
     SDL_SetRenderDrawColor( renderer, 255, 0, 0, 255 );
 
+    
+
     // Clear winow
     SDL_RenderClear( renderer );
 
@@ -36,7 +39,7 @@ int main (int argc, char** argv)
     r.w = 50;
     r.h = 50;
 
-   
+   SPushButton button(500,500,100,100);
 
     int w, h; // texture width & height
     // load our image
@@ -104,7 +107,11 @@ r1.h=2;
                     //Get the mouse offsets
                     int x = e.button.x;
                     int y = e.button.y;
-                
+                    if ( button.mouseEnter(SVector2(x,y)) ){
+                        std::cout << "Mouse in button" <<std::flush;
+                    }else{
+                        std::cout << "x="<<x<<",y="<<y <<std::flush;
+                    }
                     std::cout<<"("<<x<<" ,"<<y<< ")"<<std::flush;
                 }
             }
@@ -128,6 +135,9 @@ r1.h=2;
 		SDL_RenderCopy(renderer, img, NULL, &texr);
 		// flip the backbuffer
 		// this means that everything that we prepared behind the screens is actually shown
+        painter.setColor(St::red);
+        painter.drawRect(400,200,100,40);
+        button.paint(painter);
 		SDL_RenderPresent(renderer);
 		
 	}

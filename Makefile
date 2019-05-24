@@ -1,5 +1,6 @@
 SOURCE_FILES:= main.cpp\
-		SPainter.cpp
+		SPainter.cpp\
+		SPushButton.cpp
 make:main.cpp
 	g++ -Wall -g $(SOURCE_FILES) -o main -lSDL2 -lSDL2_image
 

@@ -1,6 +1,7 @@
 #pragma once
 #include "core.h"
 #include "SPaintEvent.h"
+#include "SPainter.h"
 class SPushButton{
 public:
     SPushButton();
@@ -9,6 +10,7 @@ public:
     int x,y,width,height;
     SRect boundingRect();
     SPainterPath shape();//outline of the object
-    void paint();
+    void paint(SPainter &painter);
     void paintEvent(SPaintEvent *event);
+    bool mouseEnter(SVector2 mouse);
 };

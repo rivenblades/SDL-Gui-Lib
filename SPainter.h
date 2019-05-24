@@ -8,7 +8,7 @@ public:
     SPainter(SDL_Window* w, SDL_Renderer* r);
     virtual void paint();
     void drawRect(int x, int y, int width, int height);
-
+    void setColor(SColor color);
 
     SDL_Renderer* _renderer;
     SDL_Window* _window;

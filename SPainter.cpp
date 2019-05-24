@@ -17,6 +17,7 @@ SPainter::SPainter(){
 	if (!_renderer){
 		std::cout << "Couldn't create renderer";
 	}
+	_color = SColor(St::red);
 }
 
 SPainter::SPainter(SDL_Window* w, SDL_Renderer* r){
@@ -28,6 +29,11 @@ SPainter::SPainter(SDL_Window* w, SDL_Renderer* r){
 void SPainter::paint(){
 	
 }
+
+void SPainter::setColor(SColor color){
+	_color = color;
+}
+
 void SPainter::drawRect(int x, int y, int width, int height){
 
 	// Set render color to blue ( rect will be rendered in this color )
