@@ -118,6 +118,7 @@ int main (int argc, char** argv)
     r1.y=1;
     r1.w=2;
     r1.h=2;
+    int startdrawx=-1,startdrawy=-1,enddrawx=-1,enddrawy=-1;
     // Blit it into place with the renderer.
    // main loop
 	while (1) {
@@ -139,13 +140,39 @@ int main (int argc, char** argv)
                     if ( button.mouseEnter(SVector2(x,y)) ){
                         std::cout << "Mouse in button" <<std::flush;
                     }else{
-                        std::cout << "x="<<x<<",y="<<y <<std::flush;
+                        // std::cout << "x="<<x<<",y="<<y <<std::flush;
+                        startdrawx = x;
+                        startdrawy = y;
                     }
+                    // std::cout<<"("<<x<<" ,"<<y<< ")"<<std::flush;
+                }
+            }
+            else if (e.type == SDL_MOUSEBUTTONUP){
+               //If the left mouse button was pressed
+                if( e.button.button == SDL_BUTTON_LEFT )
+                {
+                    //Get the mouse offsets
+                    int x = e.button.x;
+                    int y = e.button.y;
+                    // std::cout << "x="<<x<<",y="<<y <<std::flush;
+                    enddrawx = x;
+                    enddrawy = y;
+                    
                     std::cout<<"("<<x<<" ,"<<y<< ")"<<std::flush;
                 }
             }
 		} 
 		
+        if (startdrawx != -1 && enddrawx != -1){
+            r.x = startdrawx;
+            r.y = startdrawy;
+            r.w = enddrawx - startdrawx;
+            r.h = enddrawy - startdrawy;
+            startdrawx = -1;
+            startdrawy = -1;
+            enddrawx = -1;
+            enddrawy = -1;
+        }
 		// clear the screen
 		SDL_RenderClear(renderer);
 
