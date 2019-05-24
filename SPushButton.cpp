@@ -30,10 +30,9 @@ bool SPushButton::mouseEnter(SVector2 mouse){
 	int my = mouse.y;
 	if (mx >= x && mx <= mx+width){
 		if (my >= y && my <= my+height){
+			onMouseClick();
 			return true;
 		}
-	}else{
-		std::cout <<"button x="<<x<<",button y="<<y<<std::endl;
 	}
 	return false;
 }

@@ -8,6 +8,10 @@
 const int width = 1280;
 const int height = 920;
 
+void PrintSomething(){
+    std::cout << "Hey, this is my function" << std::endl;
+}
+
 int main (int argc, char** argv)
 {
     SDL_Window* window = NULL;
@@ -40,7 +44,8 @@ int main (int argc, char** argv)
     r.h = 50;
 
    SPushButton button(500,500,100,100);
-
+    button.setOnMouseClick(&PrintSomething);
+    
     int w, h; // texture width & height
     // load our image
 	SDL_Texture *img = IMG_LoadTexture(renderer, IMG_PATH);
