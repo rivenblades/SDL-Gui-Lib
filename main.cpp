@@ -65,6 +65,7 @@ int main (int argc, char** argv)
     SPushB->SetAttribute("y",button.y);
     SPushB->SetAttribute("width",button.width);
     SPushB->SetAttribute("height",button.height);
+    SPushB->SetAttribute("color",button.color.serialize());
     xmlDoc.InsertFirstChild(SPushB);
     XMLError result = xmlDoc.SaveFile("test_app.ui");
     XMLCheckResult(result);

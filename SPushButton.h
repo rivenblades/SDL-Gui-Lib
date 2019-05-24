@@ -19,5 +19,6 @@ public:
 
     // Members
     int x,y,width,height;
+    SColor color;
     std::function<void ()> onMouseClickFunction;
 };

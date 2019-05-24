@@ -21,7 +21,8 @@ void SPushButton::paintEvent(SPaintEvent* event){
 }
 
 void SPushButton::paint(SPainter &painter){
-	painter.setColor(St::red);
+	color = SColor(St::red);
+	painter.setColor(color);
 	painter.drawRect(x,y,width,height);
 }
 
