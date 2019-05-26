@@ -4,6 +4,7 @@ SPushButton::SPushButton(){
 	x=y=0;
 	width=50;
 	height = 100;
+	texture = NULL;
 }
 
 SRect SPushButton::boundingRect(){
@@ -24,6 +25,11 @@ void SPushButton::paint(SPainter &painter){
 	color = SColor(St::red);
 	painter.setColor(color);
 	painter.drawRect(x,y,width,height);
+	if (texture){
+		// TODO
+		// SPushButton should have a SRect member.
+		// SDL_RenderCopy(GetRenderer(),texture,NULL,painter.rect);
+	}
 }
 
 bool SPushButton::mouseEnter(SVector2 mouse){

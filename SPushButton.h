@@ -7,7 +7,7 @@ class SPushButton{
 public:
     SPushButton();
     SPushButton(int _x, int _y, int _width, int _height)
-    :x(_x),y(_y),width(_width),height(_height){};
+                :x(_x),y(_y),width(_width),height(_height){};
     SRect boundingRect();
     SPainterPath shape();//outline of the object
     void paint(SPainter &painter);
@@ -15,10 +15,14 @@ public:
     bool mouseEnter(SVector2 mouse);
     void setOnMouseClick(std::function<void ()> function){onMouseClickFunction = function;}
     void onMouseClick(){onMouseClickFunction();}
-    STexture texture;
+    void setTexture(STexture *tex){
+        texture = tex;
+    }
 
     // Members
     int x,y,width,height;
     SColor color;
+    STexture *texture;
+    SRect rect;
     std::function<void ()> onMouseClickFunction;
 };
