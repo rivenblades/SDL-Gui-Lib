@@ -15,7 +15,7 @@ public:
     bool mouseEnter(SVector2 mouse);
     void setOnMouseClick(std::function<void ()> function){onMouseClickFunction = function;}
     void onMouseClick(){onMouseClickFunction();}
-
+    STexture texture;
 
     // Members
     int x,y,width,height;
